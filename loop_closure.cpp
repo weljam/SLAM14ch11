@@ -40,15 +40,18 @@ int main(int argc, char **argv) {
         descriptors.push_back(descriptor);
     }
 
-    // we can compare the images directly or we can compare one image to a database 
-    // images :
+    //分别对十副图像那个互相进行比较
     cout << "comparing images with images " << endl;
     for (int i = 0; i < images.size(); i++) {
+        //DBow3的特征向量
         DBoW3::BowVector v1;
+        //根据图像的描述子矩阵获得特征向量v1
         vocab.transform(descriptors[i], v1);
         for (int j = i; j < images.size(); j++) {
+            //获得第二副图像的特征向量
             DBoW3::BowVector v2;
             vocab.transform(descriptors[j], v2);
+            //比较两副图像之间的特征向量相似度
             double score = vocab.score(v1, v2);
             cout << "image " << i << " vs image " << j << " : " << score << endl;
         }
